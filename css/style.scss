@@ -1,0 +1,375 @@
+// Variables
+$color-primario: #ff6b35;
+$color-secundario: #004e89;
+$color-texto: #333;
+$color-fondo: #f8f9fa;
+$color-blanco: #fff;
+$color-gris: #6c757d;
+
+$fuente-principal: 'Roboto', sans-serif;
+$fuente-titulos: 'Montserrat', sans-serif;
+
+$espaciado-pequeno: 10px;
+$espaciado-medio: 20px;
+$espaciado-grande: 40px;
+
+$border-radius: 8px;
+$transicion-rapida: 0.3s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin boton-base {
+  padding: 12px 30px;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all $transicion-rapida;
+  font-weight: 600;
+}
+
+@mixin hover-efecto {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@mixin responsive-mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+// Extend
+%card-base {
+  background: $color-blanco;
+  border-radius: $border-radius;
+  padding: $espaciado-medio;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all $transicion-rapida;
+}
+
+// Estilos generales
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $fuente-principal;
+  color: $color-texto;
+  background-color: $color-fondo;
+  line-height: 1.6;
+}
+
+// Header y navegacion
+header {
+  background: linear-gradient(135deg, $color-primario, $color-secundario);
+  padding: $espaciado-medio 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .navbar {
+    .navbar-brand {
+      font-family: $fuente-titulos;
+      font-size: 28px;
+      font-weight: bold;
+      color: $color-blanco !important;
+      transition: all $transicion-rapida;
+
+      &:hover {
+        transform: scale(1.05);
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .nav-link {
+      color: $color-blanco !important;
+      margin: 0 $espaciado-pequeno;
+      font-weight: 500;
+      transition: all $transicion-rapida;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: $color-blanco;
+        transition: width $transicion-rapida;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Banner principal
+.banner {
+  background: linear-gradient(to right, $color-primario, $color-secundario);
+  color: $color-blanco;
+  padding: $espaciado-grande 0;
+  text-align: center;
+  animation: slideIn 1s ease-out;
+
+  h1 {
+    font-family: $fuente-titulos;
+    font-size: 48px;
+    margin-bottom: $espaciado-medio;
+    animation: fadeIn 1.5s ease-in;
+
+    @include responsive-mobile {
+      font-size: 32px;
+    }
+  }
+
+  p {
+    font-size: 20px;
+    margin-bottom: $espaciado-medio;
+
+    @include responsive-mobile {
+      font-size: 16px;
+    }
+  }
+
+  .btn-banner {
+    @include boton-base;
+    background: $color-blanco;
+    color: $color-primario;
+    font-size: 18px;
+
+    &:hover {
+      background: $color-primario;
+      color: $color-blanco;
+      @include hover-efecto;
+    }
+  }
+}
+
+// Secciones
+section {
+  padding: $espaciado-grande 0;
+
+  h2 {
+    font-family: $fuente-titulos;
+    color: $color-secundario;
+    text-align: center;
+    margin-bottom: $espaciado-grande;
+    font-size: 36px;
+    animation: fadeIn 1s ease-in;
+
+    @include responsive-mobile {
+      font-size: 28px;
+    }
+  }
+}
+
+// Cards de productos
+.card {
+  @extend %card-base;
+  border: none;
+  overflow: hidden;
+
+  &:hover {
+    @include hover-efecto;
+
+    img {
+      transform: scale(1.1);
+    }
+  }
+
+  img {
+    transition: transform $transicion-rapida;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  .card-body {
+    padding: $espaciado-medio;
+
+    .card-title {
+      font-family: $fuente-titulos;
+      color: $color-secundario;
+      font-size: 20px;
+      margin-bottom: $espaciado-pequeno;
+    }
+
+    .card-text {
+      color: $color-gris;
+      margin-bottom: $espaciado-medio;
+    }
+
+    .btn-primary {
+      @include boton-base;
+      background: $color-primario;
+      color: $color-blanco;
+      width: 100%;
+
+      &:hover {
+        background: darken($color-primario, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+// Badge de descuento
+.badge {
+  &.bg-danger {
+    animation: pulse 2s infinite;
+  }
+}
+
+// Videos
+.video-container {
+  position: relative;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all $transicion-rapida;
+
+  &:hover {
+    @include hover-efecto;
+  }
+
+  video {
+    width: 100%;
+    display: block;
+  }
+}
+
+// Formulario de contacto
+.form-control {
+  border: 2px solid lighten($color-gris, 30%);
+  border-radius: $border-radius;
+  padding: $espaciado-pequeno;
+  transition: all $transicion-rapida;
+
+  &:focus {
+    border-color: $color-primario;
+    box-shadow: 0 0 10px rgba($color-primario, 0.3);
+  }
+}
+
+// Footer
+footer {
+  background: linear-gradient(135deg, $color-secundario, darken($color-secundario, 10%));
+  color: $color-blanco;
+  padding: $espaciado-grande 0;
+  margin-top: $espaciado-grande;
+
+  h5 {
+    font-family: $fuente-titulos;
+    margin-bottom: $espaciado-medio;
+  }
+
+  a {
+    color: $color-blanco;
+    text-decoration: none;
+    transition: all $transicion-rapida;
+
+    &:hover {
+      color: $color-primario;
+      transform: translateX(5px);
+      display: inline-block;
+    }
+  }
+
+  .social-icons {
+    @include flex-center;
+    gap: $espaciado-medio;
+
+    a {
+      font-size: 24px;
+      transition: all $transicion-rapida;
+
+      &:hover {
+        transform: scale(1.3) rotate(10deg);
+      }
+    }
+  }
+}
+
+// Carrito
+.cart-item {
+  @extend %card-base;
+  margin-bottom: $espaciado-medio;
+
+  &:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+// Responsive
+@include responsive-mobile {
+  .container {
+    padding: 0 15px;
+  }
+
+  .card {
+    margin-bottom: $espaciado-medio;
+  }
+
+  .banner {
+    padding: $espaciado-medio 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 20px !important;
+  }
+
+  .banner h1 {
+    font-size: 24px !important;
+  }
+
+  section h2 {
+    font-size: 22px !important;
+  }
+}
